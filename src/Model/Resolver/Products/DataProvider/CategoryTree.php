@@ -7,6 +7,7 @@
  * @author      <info@scandiweb.com>
  * @copyright   Copyright (c) 2018 Scandiweb, Ltd (https://scandiweb.com)
  */
+
 declare(strict_types=1);
 
 namespace ScandiPWA\CatalogGraphQl\Model\Resolver\Products\DataProvider;

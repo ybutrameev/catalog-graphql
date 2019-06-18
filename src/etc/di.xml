@@ -13,6 +13,19 @@
     <type name="Magento\CatalogGraphQl\Model\Resolver\Products\FilterArgument\ProductEntityAttributesForAst">
         <plugin name="ScandiPWA::ProductEntityAttributesForAst" type="ScandiPWA\CatalogGraphQl\Plugin\Resolver\Products\FilterArgument\ProductEntityAttributesForAst" sortOrder="1" disabled="false"/>
     </type>
+    <preference for="Magento\Framework\Api\Search\SearchCriteria" type="ScandiPWA\CatalogGraphQl\Api\SearchCriteria"/>
+    <preference for="Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Product"
+                type="ScandiPWA\CatalogGraphQl\Model\Resolver\Products\DataProvider\Product"/>
+
+    <type name="Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\ArgumentApplierPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="layered" xsi:type="string">ScandiPWA\CatalogGraphQl\Query\Resolver\LayeredNavigationFilter</item>
+                <item name="filter" xsi:type="string">Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\ArgumentApplier\Filter</item>
+                <item name="sort" xsi:type="string">Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\ArgumentApplier\Sort</item>
+            </argument>
+        </arguments>
+    </type>
 
     <virtualType name="ScandiPWA\CatalogGraphQl\Model\Search\PageSizeProvider" type="Magento\Search\Model\Search\PageSizeProvider">
         <arguments>
