@@ -37,10 +37,6 @@ type Query {
         url_path: String @doc(description: "Url path of the category")
     ): CategoryTree
     @resolver(class: "ScandiPWA\\CatalogGraphQl\\Model\\Resolver\\CategoryTree")
-
-    products (
-        layered: [Boolean] @doc(description: "Indicate layered navigation is used")
-    ): Products
 }
 
 interface ProductInterface {

@@ -42,36 +42,9 @@ class ConfigurableProductAttributeFilter implements CustomFilterInterface
      */
     public function apply(Filter $filter, AbstractDb $collection)
     {
-        $conditionType = $filter->getConditionType();
         $attributeName = $filter->getField();
         $attributeValue = $filter->getValue();
-        
         $collection->addFieldToFilter($attributeName, $attributeValue);
-
-//        $virtualAndSimpleProducts = $this->collectionFactory->create()
-//            ->addAttributeToFilter($attributeName, $attributeValue, $conditionType)
-//            ->getItems();
-//
-//        $configurableAndSimpleProductList = [];
-//
-//        /**
-//         * @var $product \Magento\Catalog\Model\Product\Interceptor
-//         */
-//        foreach ($virtualAndSimpleProducts as $product) {
-//            $configurableProduct = $this->configurable->getParentIdsByChild($product->getId());
-//
-//            if (isset($configurableProduct[0])){
-//                // use configurable product
-//                array_push($configurableAndSimpleProductList, $configurableProduct[0]);
-//            } else {
-//                // use simple product
-//                array_push($configurableAndSimpleProductList, $product->getId());
-//            }
-//        }
-//
-//        $configurableAndSimpleProductList = array_unique($configurableAndSimpleProductList);
-//
-//        $collection->addIdFilter($configurableAndSimpleProductList);
 
         return true;
     }

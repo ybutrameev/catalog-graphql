@@ -20,8 +20,7 @@
     <type name="Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\ArgumentApplierPool">
         <arguments>
             <argument name="appliers" xsi:type="array">
-                <item name="layered" xsi:type="string">ScandiPWA\CatalogGraphQl\Query\Resolver\LayeredNavigationFilter</item>
-                <item name="filter" xsi:type="string">Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\ArgumentApplier\Filter</item>
+                <item name="filter" xsi:type="string">ScandiPWA\CatalogGraphQl\Query\Resolver\FilterArgumentApplier</item>
                 <item name="sort" xsi:type="string">Magento\Framework\GraphQl\Query\Resolver\Argument\SearchCriteria\ArgumentApplier\Sort</item>
             </argument>
         </arguments>

@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace ScandiPWA\CatalogGraphQl\Model\Resolver\Products\DataProvider;
 
 use Magento\Catalog\Model\Product\Visibility;
-use Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection;
 use Magento\CatalogSearch\Model\ResourceModel\Fulltext\CollectionFactory as FulltextCollectionFactory;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
@@ -57,8 +56,7 @@ class Product extends \Magento\CatalogGraphQl\Model\Resolver\Products\DataProvid
         CollectionFactory $collectionFactory,
         ProductSearchResultsInterfaceFactory $searchResultsFactory,
         Visibility $visibility,
-        CollectionProcessorInterface $collectionProcessor,
-        FulltextCollectionFactory $ftc
+        CollectionProcessorInterface $collectionProcessor
     )
     {
         $this->collectionFactory = $collectionFactory;
@@ -83,18 +81,18 @@ class Product extends \Magento\CatalogGraphQl\Model\Resolver\Products\DataProvid
         bool $isChildSearch = false
     ): SearchResultsInterface
     {
-        /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
         /**
          * In some scenarios SearchCriteria is not resolved over DI (WTF?),
          * using builder name to determine object instance, therefore we
          * must check for the instance type.
+         * @var \ScandiPWA\CatalogGraphQl\Api\SearchCriteria $searchCriteria
          */
-        $t = 't';
-        $ftc = ObjectManager::getInstance()->get(FulltextCollectionFactory::class);
         if (method_exists($searchCriteria, 'isLayered') && $searchCriteria->isLayered()) {
-            $newCollection = ObjectManager::getInstance()->get(Collection::class);
-            $collection = clone $newCollection;
-            $collection->clear();
+            /**
+             * @var FulltextCollectionFactory $fullTextCollectionFactory
+             */
+            $fullTextCollectionFactory = ObjectManager::getInstance()->get(FulltextCollectionFactory::class);
+            $collection = $fullTextCollectionFactory->create();
         } else {
             $collection = $this->collectionFactory->create();
         }

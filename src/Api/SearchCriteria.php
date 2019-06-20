@@ -26,6 +26,6 @@ class SearchCriteria extends CoreSearchCriteria
      */
     public function isLayered(): bool
     {
-        return $this->_get(self::LAYERED);
+        return !!$this->_get(self::LAYERED);
     }
 }
