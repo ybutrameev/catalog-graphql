@@ -14,13 +14,22 @@ namespace ScandiPWA\CatalogGraphQl\Plugin\Resolver\Products\FilterArgument;
 
 use \Magento\CatalogGraphQl\Model\Resolver\Products\FilterArgument\ProductEntityAttributesForAst
     as MagentoProductEntityAttributesForAst;
+use ScandiPWA\CatalogGraphQl\Model\AttributeDbProvider;
 
 class ProductEntityAttributesForAst
 {
     /**
-     * @var array
+     * ProductEntityAttributesForAst constructor.
+     * @param array $attributes
      */
-    private $additionalAttributes = ['category_url_key', 'category_url_path'];
+    public function __construct(
+        AttributeDbProvider $productAttributeProvider,
+        array $attributes
+    )
+    {
+        $this->additionalAttributes = $attributes;
+        $this->productAttributeProvider = $productAttributeProvider;
+    }
 
     /**
      * Injects custom additional attributes
@@ -30,11 +39,9 @@ class ProductEntityAttributesForAst
      *
      * @return array
      */
-    public function afterGetEntityAttributes(MagentoProductEntityAttributesForAst $subject, $result) {
-        foreach ($this->additionalAttributes as $attribute) {
-            $result[$attribute] = $attribute;
-        }
-
-        return $result;
+    public function aroundGetEntityAttributes(MagentoProductEntityAttributesForAst $subject, callable $next) {
+        return array_merge($next(),
+            $this->productAttributeProvider->getProductAttributes(),
+            array_keys($this->additionalAttributes));
     }
 }
